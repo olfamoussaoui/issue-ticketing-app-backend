@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IssueTcketingAppBackendApplication {
+public class IssueTicketingAppBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IssueTcketingAppBackendApplication.class, args);
+		SpringApplication.run(IssueTicketingAppBackendApplication.class, args);
 	}
 
 }

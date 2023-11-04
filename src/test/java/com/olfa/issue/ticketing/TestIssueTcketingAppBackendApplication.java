@@ -17,7 +17,7 @@ public class TestIssueTcketingAppBackendApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.from(IssueTcketingAppBackendApplication::main).with(TestIssueTcketingAppBackendApplication.class).run(args);
+		SpringApplication.from(IssueTicketingAppBackendApplication::main).with(TestIssueTcketingAppBackendApplication.class).run(args);
 	}
 
 }
