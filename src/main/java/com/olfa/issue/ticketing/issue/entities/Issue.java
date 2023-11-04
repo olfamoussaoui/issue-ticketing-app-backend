@@ -1,4 +1,4 @@
-package com.olfa.issue.ticketing.issue.dao;
+package com.olfa.issue.ticketing.issue.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,16 +7,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity(name = "issues")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
-public class IssueDAO {
+public class Issue {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String description;
     private String category;
     private Priority priority;
@@ -28,13 +29,13 @@ public class IssueDAO {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    enum Status {
+    public enum Status {
         OPEN,
         IN_PROGRESS,
         CLOSED
     }
 
-    enum Priority {
+    public enum Priority {
         ONE,
         TWO,
         THREE,
