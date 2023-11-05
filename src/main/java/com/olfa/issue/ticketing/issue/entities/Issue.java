@@ -23,10 +23,13 @@ public class Issue {
     private String category;
     private int priority;
     private int progress;
+    @Builder.Default
     private Status status = Status.OPEN;
     private boolean active;
     @Column(name = "created_at")
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
     @Column(name = "updated_at")
+    @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
 }
