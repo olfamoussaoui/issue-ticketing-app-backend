@@ -1,6 +1,8 @@
 package com.olfa.issue.ticketing.issue.repositories;
 
 import com.olfa.issue.ticketing.issue.entities.Issue;
+import com.olfa.issue.ticketing.issue.enumerations.Status;
+import com.olfa.issue.ticketing.issue.exceptions.IOError;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -44,7 +46,7 @@ public class IssueRepositoryImpl implements IssueRepository {
     }
 
     @Override
-    public Collection<Issue> getAllIssuesByStatus(Issue.Status status) {
+    public Collection<Issue> getAllIssuesByStatus(Status status) {
         return this.issueRepositoryJPA
                 .getIssuesByStatus(status);
     }
@@ -56,7 +58,7 @@ public class IssueRepositoryImpl implements IssueRepository {
     }
 
     @Override
-    public Collection<Issue> getAllIssuesByPriority(Issue.Priority priority) {
+    public Collection<Issue> getAllIssuesByPriority(int priority) {
         return this.issueRepositoryJPA
                 .getIssuesByPriority(priority);
     }

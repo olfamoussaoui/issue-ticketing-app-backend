@@ -1,5 +1,6 @@
 package com.olfa.issue.ticketing.issue.entities;
 
+import com.olfa.issue.ticketing.issue.enumerations.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,7 @@ public class Issue {
     private UUID id;
     private String description;
     private String category;
-    private Priority priority;
+    private int priority;
     private int progress;
     private Status status = Status.OPEN;
     private boolean active;
@@ -28,18 +29,4 @@ public class Issue {
     private LocalDateTime createdAt = LocalDateTime.now();
     @Column(name = "updated_at")
     private LocalDateTime updatedAt = LocalDateTime.now();
-
-    public enum Status {
-        OPEN,
-        IN_PROGRESS,
-        CLOSED
-    }
-
-    public enum Priority {
-        ONE,
-        TWO,
-        THREE,
-        FOR,
-        FIVE
-    }
 }

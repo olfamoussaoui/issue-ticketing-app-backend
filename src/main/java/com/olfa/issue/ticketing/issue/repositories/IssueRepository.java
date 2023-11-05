@@ -1,6 +1,7 @@
 package com.olfa.issue.ticketing.issue.repositories;
 
 import com.olfa.issue.ticketing.issue.entities.Issue;
+import com.olfa.issue.ticketing.issue.enumerations.Status;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -15,16 +16,11 @@ public interface IssueRepository {
 
     Collection<Issue> getAllIssues();
 
-    Collection<Issue> getAllIssuesByStatus(Issue.Status status);
+    Collection<Issue> getAllIssuesByStatus(Status status);
 
     Collection<Issue> getAllIssuesByRangeDate(LocalDate startDate, LocalDate endDate);
 
-    Collection<Issue> getAllIssuesByPriority(Issue.Priority priority);
+    Collection<Issue> getAllIssuesByPriority(int priority);
 
     IssueResult deleteIssueById(UUID issueId);
-
-    sealed interface IOError {
-        record IssueNotFoundError() implements IOError {
-        }
-    }
 }
