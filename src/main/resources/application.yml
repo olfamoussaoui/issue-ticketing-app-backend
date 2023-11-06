@@ -5,4 +5,11 @@ spring:
     url: jdbc:postgresql://192.168.19.1:5432/issue-ticketing-db
     username: user
     password: secret-pass#123
-
+management:
+  endpoint:
+    beans:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: beans
