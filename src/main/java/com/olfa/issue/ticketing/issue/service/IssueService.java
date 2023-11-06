@@ -1,10 +1,11 @@
 package com.olfa.issue.ticketing.issue.service;
 
-import com.olfa.issue.ticketing.issue.dtos.IssueDto;
 import com.olfa.issue.ticketing.issue.dtos.IssueRangeDateDto;
+import com.olfa.issue.ticketing.issue.dtos.IssueRequestDto;
+import com.olfa.issue.ticketing.issue.dtos.IssueResponseDto;
 import com.olfa.issue.ticketing.issue.dtos.IssueResultDto;
 import com.olfa.issue.ticketing.issue.enumerations.Status;
-import com.olfa.issue.ticketing.issue.mapper.IssueDTOMapper;
+import com.olfa.issue.ticketing.issue.mapper.IssueResponseDTOMapper;
 import com.olfa.issue.ticketing.issue.repositories.IssueRepository;
 import com.olfa.issue.ticketing.issue.repositories.IssueResult;
 
@@ -14,24 +15,24 @@ import java.util.stream.Collectors;
 
 public class IssueService {
     private final IssueRepository issueRepository;
-    private final IssueDTOMapper issueDTOMapper;
+    private final IssueResponseDTOMapper issueResponseDTOMapper;
 
-    public IssueService(IssueRepository issueRepository, IssueDTOMapper issueDTOMapper) {
+    public IssueService(IssueRepository issueRepository, IssueResponseDTOMapper issueResponseDTOMapper) {
         this.issueRepository = issueRepository;
-        this.issueDTOMapper = issueDTOMapper;
+        this.issueResponseDTOMapper = issueResponseDTOMapper;
     }
 
-    public IssueDto createIssue(IssueDto issueDto) {
+    public IssueResponseDto createIssue(IssueRequestDto issueDto) {
         var createdIssue = this.issueRepository
-                .createIssue(IssueDto.toIssue(issueDto));
-        return issueDTOMapper.apply(createdIssue);
+                .createIssue(IssueRequestDto.toIssue(issueDto));
+        return issueResponseDTOMapper.apply(createdIssue);
     }
 
-    public IssueResultDto updateIssue(IssueDto issueDto) {
+    public IssueResultDto updateIssue(IssueRequestDto issueDto) {
         var updatedIssue = this.issueRepository
-                .updateIssue(IssueDto.toIssue(issueDto));
+                .updateIssue(IssueRequestDto.toIssue(issueDto));
         return switch (updatedIssue) {
-            case IssueResult.Success s -> new IssueResultDto.Success(issueDTOMapper.apply(s.issue()));
+            case IssueResult.Success s -> new IssueResultDto.Success(issueResponseDTOMapper.apply(s.issue()));
             case IssueResult.Failure f -> new IssueResultDto.Failure(f.message(), f.cause());
         };
     }
@@ -40,42 +41,42 @@ public class IssueService {
         var retreivedIssue = this.issueRepository
                 .getIssue(issueId);
         return switch (retreivedIssue) {
-            case IssueResult.Success s -> new IssueResultDto.Success(issueDTOMapper.apply(s.issue()));
+            case IssueResult.Success s -> new IssueResultDto.Success(issueResponseDTOMapper.apply(s.issue()));
             case IssueResult.Failure f -> new IssueResultDto.Failure(f.message(), f.cause());
         };
     }
 
-    public Collection<IssueDto> getAllIssues() {
+    public Collection<IssueResponseDto> getAllIssues() {
         return this.issueRepository
                 .getAllIssues()
                 .stream()
-                .map(issueDTOMapper)
+                .map(issueResponseDTOMapper)
                 .collect(Collectors.toList());
     }
 
-    public Collection<IssueDto> getAllIssuesByStatus(Status status) {
+    public Collection<IssueResponseDto> getAllIssuesByStatus(Status status) {
         return this.issueRepository
                 .getAllIssuesByStatus(status)
                 .stream()
-                .map(issueDTOMapper)
+                .map(issueResponseDTOMapper)
                 .collect(Collectors.toList());
     }
 
-    public Collection<IssueDto> getAllIssuesByRangeDate(IssueRangeDateDto issueRangeDateDto) {
+    public Collection<IssueResponseDto> getAllIssuesByRangeDate(IssueRangeDateDto issueRangeDateDto) {
         return this.issueRepository
                 .getAllIssuesByRangeDate(
                         issueRangeDateDto.startDate(),
                         issueRangeDateDto.endDate())
                 .stream()
-                .map(issueDTOMapper)
+                .map(issueResponseDTOMapper)
                 .collect(Collectors.toList());
     }
 
-    public Collection<IssueDto> getAllIssuesByPriority(int priority) {
+    public Collection<IssueResponseDto> getAllIssuesByPriority(int priority) {
         return this.issueRepository
                 .getAllIssuesByPriority(priority)
                 .stream()
-                .map(issueDTOMapper)
+                .map(issueResponseDTOMapper)
                 .collect(Collectors.toList());
     }
 
@@ -83,7 +84,7 @@ public class IssueService {
         var deletedIssue = this.issueRepository
                 .deleteIssueById(issueId);
         return switch (deletedIssue) {
-            case IssueResult.Success s -> new IssueResultDto.Success(issueDTOMapper.apply(s.issue()));
+            case IssueResult.Success s -> new IssueResultDto.Success(issueResponseDTOMapper.apply(s.issue()));
             case IssueResult.Failure f -> new IssueResultDto.Failure(f.message(), f.cause());
         };
     }

@@ -1,6 +1,6 @@
 package com.olfa.issue.ticketing.issue.configuration;
 
-import com.olfa.issue.ticketing.issue.mapper.IssueDTOMapper;
+import com.olfa.issue.ticketing.issue.mapper.IssueResponseDTOMapper;
 import com.olfa.issue.ticketing.issue.repositories.IssueRepository;
 import com.olfa.issue.ticketing.issue.repositories.IssueRepositoryImpl;
 import com.olfa.issue.ticketing.issue.repositories.IssueRepositoryJPA;
@@ -16,12 +16,12 @@ public class IssueConfiguration {
     }
 
     @Bean
-    public IssueDTOMapper issueDTOMapper() {
-        return new IssueDTOMapper();
+    public IssueResponseDTOMapper issueDTOMapper() {
+        return new IssueResponseDTOMapper();
     }
 
     @Bean
-    public IssueService issueService(final IssueRepository issueRepository, final IssueDTOMapper issueDTOMapper) {
-        return new IssueService(issueRepository, issueDTOMapper);
+    public IssueService issueService(final IssueRepository issueRepository, final IssueResponseDTOMapper issueResponseDTOMapper) {
+        return new IssueService(issueRepository, issueResponseDTOMapper);
     }
 }

@@ -1,15 +1,15 @@
 package com.olfa.issue.ticketing.issue.mapper;
 
-import com.olfa.issue.ticketing.issue.dtos.IssueDto;
+import com.olfa.issue.ticketing.issue.dtos.IssueResponseDto;
 import com.olfa.issue.ticketing.issue.entities.Issue;
 
 import java.util.function.Function;
 
-public class IssueDTOMapper implements Function<Issue, IssueDto> {
+public class IssueResponseDTOMapper implements Function<Issue, IssueResponseDto> {
 
     @Override
-    public IssueDto apply(Issue issue) {
-        return new IssueDto(
+    public IssueResponseDto apply(Issue issue) {
+        return new IssueResponseDto(
                 issue.getId(),
                 issue.getDescription(),
                 issue.getCategory(),
