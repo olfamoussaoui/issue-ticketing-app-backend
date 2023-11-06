@@ -13,6 +13,7 @@ public record IssueResponseDto(
         int progress,
         Status status,
         boolean active,
-        LocalDateTime creationDate
+        LocalDateTime creationDate,
+        LocalDateTime updatedTime
 ) {
 }

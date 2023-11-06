@@ -17,7 +17,8 @@ public class IssueResponseDTOMapper implements Function<Issue, IssueResponseDto>
                 issue.getProgress(),
                 issue.getStatus(),
                 issue.isActive(),
-                issue.getCreatedAt()
+                issue.getCreatedAt(),
+                issue.getUpdatedAt()
         );
     }
 }

@@ -16,7 +16,7 @@ public class IssueConfiguration {
     }
 
     @Bean
-    public IssueResponseDTOMapper issueDTOMapper() {
+    public IssueResponseDTOMapper issueResponseDTOMapper() {
         return new IssueResponseDTOMapper();
     }
 

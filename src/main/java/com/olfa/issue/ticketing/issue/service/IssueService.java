@@ -1,14 +1,14 @@
 package com.olfa.issue.ticketing.issue.service;
 
-import com.olfa.issue.ticketing.issue.dtos.IssueRangeDateDto;
-import com.olfa.issue.ticketing.issue.dtos.IssueRequestDto;
 import com.olfa.issue.ticketing.issue.dtos.IssueResponseDto;
 import com.olfa.issue.ticketing.issue.dtos.IssueResultDto;
+import com.olfa.issue.ticketing.issue.entities.Issue;
 import com.olfa.issue.ticketing.issue.enumerations.Status;
 import com.olfa.issue.ticketing.issue.mapper.IssueResponseDTOMapper;
 import com.olfa.issue.ticketing.issue.repositories.IssueRepository;
 import com.olfa.issue.ticketing.issue.repositories.IssueResult;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -22,15 +22,15 @@ public class IssueService {
         this.issueResponseDTOMapper = issueResponseDTOMapper;
     }
 
-    public IssueResponseDto createIssue(IssueRequestDto issueDto) {
+    public IssueResponseDto createIssue(Issue issueRequest) {
         var createdIssue = this.issueRepository
-                .createIssue(IssueRequestDto.toIssue(issueDto));
+                .createIssue(issueRequest);
         return issueResponseDTOMapper.apply(createdIssue);
     }
 
-    public IssueResultDto updateIssue(IssueRequestDto issueDto) {
+    public IssueResultDto updateIssue(Issue issueRequest) {
         var updatedIssue = this.issueRepository
-                .updateIssue(IssueRequestDto.toIssue(issueDto));
+                .updateIssue(issueRequest);
         return switch (updatedIssue) {
             case IssueResult.Success s -> new IssueResultDto.Success(issueResponseDTOMapper.apply(s.issue()));
             case IssueResult.Failure f -> new IssueResultDto.Failure(f.message(), f.cause());
@@ -62,11 +62,9 @@ public class IssueService {
                 .collect(Collectors.toList());
     }
 
-    public Collection<IssueResponseDto> getAllIssuesByRangeDate(IssueRangeDateDto issueRangeDateDto) {
+    public Collection<IssueResponseDto> getAllIssuesByRangeDate(LocalDate startDate, LocalDate endDate) {
         return this.issueRepository
-                .getAllIssuesByRangeDate(
-                        issueRangeDateDto.startDate(),
-                        issueRangeDateDto.endDate())
+                .getAllIssuesByRangeDate(startDate, endDate)
                 .stream()
                 .map(issueResponseDTOMapper)
                 .collect(Collectors.toList());
