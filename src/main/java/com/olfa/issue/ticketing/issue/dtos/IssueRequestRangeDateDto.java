@@ -2,7 +2,7 @@ package com.olfa.issue.ticketing.issue.dtos;
 
 import java.time.LocalDate;
 
-public record IssueRangeDateDto(
+public record IssueRequestRangeDateDto(
         LocalDate startDate,
         LocalDate endDate
 ) {
