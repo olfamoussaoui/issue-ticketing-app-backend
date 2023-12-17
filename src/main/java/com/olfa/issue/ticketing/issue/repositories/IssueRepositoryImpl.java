@@ -27,7 +27,7 @@ public class IssueRepositoryImpl implements IssueRepository {
         if (retrievedIssue.isEmpty())
             return new IssueResult.Failure("", new IOError.IssueNotFoundError());
 
-        return new IssueResult.Success(this.issueRepositoryJPA.save(retrievedIssue.get()));
+        return new IssueResult.Success(this.issueRepositoryJPA.save(issue));
     }
 
     @Override

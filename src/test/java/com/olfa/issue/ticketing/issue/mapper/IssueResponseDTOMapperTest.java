@@ -1,6 +1,7 @@
 package com.olfa.issue.ticketing.issue.mapper;
 
 import com.olfa.issue.ticketing.issue.entities.Issue;
+import com.olfa.issue.ticketing.issue.enumerations.Category;
 import com.olfa.issue.ticketing.issue.enumerations.Status;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +19,7 @@ class IssueResponseDTOMapperTest {
                 UUID.randomUUID(),
                 "Some problem with the PC",
                 "Hardware",
+                Category.HARDWARE,
                 3,
                 0,
                 Status.OPEN,
@@ -30,6 +32,7 @@ class IssueResponseDTOMapperTest {
         assertAll(
                 () -> assertNotNull(mappedIssue),
                 () -> assertSame(issue.getId(), mappedIssue.id()),
+                () -> assertSame(issue.getTitle(), mappedIssue.title()),
                 () -> assertSame(issue.getDescription(), mappedIssue.description()),
                 () -> assertSame(issue.getCategory(), mappedIssue.category()),
                 () -> assertSame(issue.getPriority(), mappedIssue.priority()),

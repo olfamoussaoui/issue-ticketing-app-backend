@@ -1,5 +1,6 @@
 package com.olfa.issue.ticketing.issue.entities;
 
+import com.olfa.issue.ticketing.issue.enumerations.Category;
 import com.olfa.issue.ticketing.issue.enumerations.Status;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,13 +18,14 @@ public class Issue {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    private String title;
     private String description;
-    private String category;
+    private Category category;
     private int priority;
     private int progress;
     @Builder.Default
     private Status status = Status.OPEN;
-    private boolean active;
+    private boolean active = true;
     @Column(name = "created_at")
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();

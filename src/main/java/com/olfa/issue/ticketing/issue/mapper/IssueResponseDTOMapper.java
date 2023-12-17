@@ -11,6 +11,7 @@ public class IssueResponseDTOMapper implements Function<Issue, IssueResponseDto>
     public IssueResponseDto apply(Issue issue) {
         return new IssueResponseDto(
                 issue.getId(),
+                issue.getTitle(),
                 issue.getDescription(),
                 issue.getCategory(),
                 issue.getPriority(),

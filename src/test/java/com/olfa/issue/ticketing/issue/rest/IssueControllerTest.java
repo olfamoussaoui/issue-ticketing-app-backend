@@ -7,6 +7,7 @@ import com.olfa.issue.ticketing.issue.dtos.IssueRequestRangeDateDto;
 import com.olfa.issue.ticketing.issue.dtos.IssueResponseDto;
 import com.olfa.issue.ticketing.issue.dtos.IssueResultDto;
 import com.olfa.issue.ticketing.issue.entities.Issue;
+import com.olfa.issue.ticketing.issue.enumerations.Category;
 import com.olfa.issue.ticketing.issue.enumerations.Status;
 import com.olfa.issue.ticketing.issue.exceptions.IOError;
 import com.olfa.issue.ticketing.issue.mapper.IssueResponseDTOMapper;
@@ -26,8 +27,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static com.olfa.issue.ticketing.issue.dtos.validators.IssueRequestDtoValidator.ValidationResult.DESCRIPTION_NOT_VALID;
-import static com.olfa.issue.ticketing.issue.dtos.validators.IssueRequestDtoValidator.ValidationResult.PRIORITY_NOT_VALID;
+import static com.olfa.issue.ticketing.issue.dtos.validators.IssueRequestDtoValidator.ValidationResult.*;
 import static com.olfa.issue.ticketing.issue.dtos.validators.IssueRequestRangeDateDtoValidator.ValidationResult.END_DATE_IS_BEFORE_START_DATE_ERROR;
 import static com.olfa.issue.ticketing.issue.dtos.validators.IssueRequestRangeDateDtoValidator.ValidationResult.START_DATE_IN_FUTURE_ERROR;
 import static org.mockito.ArgumentMatchers.any;
@@ -61,6 +61,7 @@ class IssueControllerTest {
         final IssueRequestDto issueRequestDto = new IssueRequestDto(
                 "Some problem with the PC",
                 "Hardware",
+                Category.HARDWARE,
                 4,
                 0,
                 Status.OPEN,
@@ -85,7 +86,8 @@ class IssueControllerTest {
     void testCreateIssueReturnsBadRequestStatus() throws Exception {
         final IssueRequestDto issueRequestDto = new IssueRequestDto(
                 "",
-                "Hardware",
+                "",
+                Category.HARDWARE,
                 10,
                 0,
                 Status.OPEN,
@@ -106,7 +108,10 @@ class IssueControllerTest {
                         String.valueOf(DESCRIPTION_NOT_VALID).toLowerCase()))
                 .andExpect(header().string(
                         String.valueOf(PRIORITY_NOT_VALID),
-                        String.valueOf(PRIORITY_NOT_VALID).toLowerCase()));
+                        String.valueOf(PRIORITY_NOT_VALID).toLowerCase()))
+                .andExpect(header().string(
+                        String.valueOf(TITLE_NOT_VALID),
+                        String.valueOf(TITLE_NOT_VALID).toLowerCase()));
     }
 
     @Test
@@ -115,12 +120,14 @@ class IssueControllerTest {
         final IssueRequestDto issueRequestDto = new IssueRequestDto(
                 "Some problem with the PC",
                 "Hardware",
+                Category.HARDWARE,
                 4,
                 0,
                 Status.IN_PROGRESS,
                 true);
         final var issueResponseDto = new IssueResponseDto(
                 issueId,
+                issueRequestDto.title(),
                 issueRequestDto.description(),
                 issueRequestDto.category(),
                 issueRequestDto.priority(),
@@ -148,6 +155,7 @@ class IssueControllerTest {
         final IssueRequestDto issueRequestDto = new IssueRequestDto(
                 "Some problem with the PC",
                 "Hardware",
+                Category.HARDWARE,
                 4,
                 0,
                 Status.IN_PROGRESS,
@@ -172,7 +180,8 @@ class IssueControllerTest {
     void testUpdateIssueWithInValidRequestReturnsBadRequestStatus() throws Exception {
         final IssueRequestDto issueRequestDto = new IssueRequestDto(
                 "",
-                "Hardware",
+                "",
+                Category.HARDWARE,
                 4,
                 0,
                 Status.IN_PROGRESS,
@@ -185,7 +194,10 @@ class IssueControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(header().string(
                         DESCRIPTION_NOT_VALID.name(),
-                        DESCRIPTION_NOT_VALID.name().toLowerCase()));
+                        DESCRIPTION_NOT_VALID.name().toLowerCase()))
+                .andExpect(header().string(
+                        TITLE_NOT_VALID.name(),
+                        TITLE_NOT_VALID.name().toLowerCase()));
     }
 
     @Test
@@ -195,6 +207,7 @@ class IssueControllerTest {
                 issueId,
                 "Some problem with the PC",
                 "Hardware",
+                Category.HARDWARE,
                 4,
                 0,
                 Status.IN_PROGRESS,
@@ -233,6 +246,7 @@ class IssueControllerTest {
                 new IssueResponseDto(UUID.randomUUID(),
                         "Some problem with the PC",
                         "Hardware",
+                        Category.HARDWARE,
                         4,
                         0,
                         Status.IN_PROGRESS,
@@ -242,6 +256,7 @@ class IssueControllerTest {
                 new IssueResponseDto(UUID.randomUUID(),
                         "Some problem with the Server",
                         "Hardware",
+                        Category.HARDWARE,
                         5,
                         0,
                         Status.IN_PROGRESS,
@@ -266,6 +281,7 @@ class IssueControllerTest {
                 new IssueResponseDto(UUID.randomUUID(),
                         "Some problem with the PC",
                         "Hardware",
+                        Category.HARDWARE,
                         4,
                         0,
                         Status.IN_PROGRESS,
@@ -275,6 +291,7 @@ class IssueControllerTest {
                 new IssueResponseDto(UUID.randomUUID(),
                         "Some problem with the Server",
                         "Hardware",
+                        Category.HARDWARE,
                         5,
                         0,
                         Status.IN_PROGRESS,
@@ -300,6 +317,7 @@ class IssueControllerTest {
                         UUID.randomUUID(),
                         "Some problem with the server",
                         "Hardware",
+                        Category.HARDWARE,
                         3,
                         0,
                         Status.OPEN,
@@ -310,6 +328,7 @@ class IssueControllerTest {
                         UUID.randomUUID(),
                         "Some problem with the PC",
                         "Hardware",
+                        Category.HARDWARE,
                         3,
                         0,
                         Status.OPEN,
@@ -320,6 +339,7 @@ class IssueControllerTest {
                         UUID.randomUUID(),
                         "Need pay recap",
                         "Administration",
+                        Category.OTHER,
                         3,
                         0,
                         Status.OPEN,
@@ -330,6 +350,7 @@ class IssueControllerTest {
                         UUID.randomUUID(),
                         "Some problem with the PC",
                         "Hardware",
+                        Category.HARDWARE,
                         3,
                         0,
                         Status.IN_PROGRESS,
@@ -377,6 +398,7 @@ class IssueControllerTest {
                         UUID.randomUUID(),
                         "Some problem with the server",
                         "Hardware",
+                        Category.HARDWARE,
                         3,
                         0,
                         Status.OPEN,
@@ -387,6 +409,7 @@ class IssueControllerTest {
                         UUID.randomUUID(),
                         "Some problem with the PC",
                         "Hardware",
+                        Category.HARDWARE,
                         3,
                         0,
                         Status.OPEN,
@@ -397,6 +420,7 @@ class IssueControllerTest {
                         UUID.randomUUID(),
                         "Need pay recap",
                         "Administration",
+                        Category.OTHER,
                         3,
                         0,
                         Status.OPEN,
@@ -407,6 +431,7 @@ class IssueControllerTest {
                         UUID.randomUUID(),
                         "Some problem with the PC",
                         "Hardware",
+                        Category.HARDWARE,
                         3,
                         0,
                         Status.IN_PROGRESS,
@@ -434,6 +459,7 @@ class IssueControllerTest {
                 issueId,
                 "Some problem with the PC",
                 "Hardware",
+                Category.HARDWARE,
                 4,
                 0,
                 Status.IN_PROGRESS,

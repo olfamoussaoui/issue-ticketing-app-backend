@@ -3,6 +3,7 @@ package com.olfa.issue.ticketing.issue.service;
 import com.olfa.issue.ticketing.issue.dtos.IssueResponseDto;
 import com.olfa.issue.ticketing.issue.dtos.IssueResultDto;
 import com.olfa.issue.ticketing.issue.entities.Issue;
+import com.olfa.issue.ticketing.issue.enumerations.Category;
 import com.olfa.issue.ticketing.issue.enumerations.Status;
 import com.olfa.issue.ticketing.issue.exceptions.IOError;
 import com.olfa.issue.ticketing.issue.mapper.IssueResponseDTOMapper;
@@ -41,8 +42,9 @@ class IssueServiceTest {
     @Test
     void testCreateIssueReturnsIssueDto() {
         final Issue issueRequest = Issue.builder()
+                .title("Hardware problem PC")
                 .description("Some problem with the PC")
-                .category("Hardware")
+                .category(Category.HARDWARE)
                 .priority(3)
                 .progress(0)
                 .status(Status.OPEN)
@@ -51,8 +53,9 @@ class IssueServiceTest {
 
         final Issue issue = Issue.builder()
                 .id(UUID.randomUUID())
+                .title("problem with the PC")
                 .description("Some problem with the PC")
-                .category("Hardware")
+                .category(Category.HARDWARE)
                 .priority(3)
                 .progress(0)
                 .status(Status.OPEN)
@@ -76,8 +79,9 @@ class IssueServiceTest {
     @Test
     void testUpdateIssueReturnsIssueDtoSuccess() {
         final Issue issueRequest = Issue.builder()
+                .title("problem with the server")
                 .description("Some problem with the server")
-                .category("Hardware")
+                .category(Category.HARDWARE)
                 .priority(3)
                 .progress(0)
                 .status(Status.OPEN)
@@ -86,8 +90,9 @@ class IssueServiceTest {
         final LocalDateTime issueUpdatedTime = LocalDateTime.now();
         final Issue issue = Issue.builder()
                 .id(UUID.randomUUID())
+                .title("Problem with the server")
                 .description("Some problem with the server")
-                .category("Hardware")
+                .category(Category.HARDWARE)
                 .priority(3)
                 .progress(0)
                 .status(Status.IN_PROGRESS)
@@ -111,8 +116,9 @@ class IssueServiceTest {
     void testUpdateIssueReturnsIssueDtoFailure() {
         final Issue issueRequest = Issue.builder()
                 .id(UUID.randomUUID())
-                .description("Some problem with the server")
-                .category("Hardware")
+                .title("Problem with the server")
+                .description("Problem with the server")
+                .category(Category.HARDWARE)
                 .priority(3)
                 .progress(0)
                 .status(Status.OPEN)
@@ -134,8 +140,9 @@ class IssueServiceTest {
         final UUID issueId = UUID.randomUUID();
         final Issue issue = Issue.builder()
                 .id(issueId)
+                .title("Some problem with the server")
                 .description("Some problem with the server")
-                .category("Hardware")
+                .category(Category.HARDWARE)
                 .priority(3)
                 .progress(0)
                 .status(Status.IN_PROGRESS)
@@ -174,8 +181,9 @@ class IssueServiceTest {
         var issueList = List.of(
                 Issue.builder()
                         .id(UUID.randomUUID())
+                        .title("Server problem")
                         .description("Some problem with the server")
-                        .category("Hardware")
+                        .category(Category.HARDWARE)
                         .priority(3)
                         .progress(0)
                         .status(Status.OPEN)
@@ -185,8 +193,9 @@ class IssueServiceTest {
                         .build(),
                 Issue.builder()
                         .id(UUID.randomUUID())
+                        .title("Problem PC")
                         .description("Some problem with the Pc")
-                        .category("Hardware")
+                        .category(Category.HARDWARE)
                         .priority(3)
                         .progress(0)
                         .status(Status.IN_PROGRESS)
@@ -196,8 +205,9 @@ class IssueServiceTest {
                         .build(),
                 Issue.builder()
                         .id(UUID.randomUUID())
+                        .title("Want Screen")
                         .description("I need another screen")
-                        .category("Hardware")
+                        .category(Category.HARDWARE)
                         .priority(3)
                         .progress(0)
                         .status(Status.CLOSED)
@@ -207,8 +217,9 @@ class IssueServiceTest {
                         .build(),
                 Issue.builder()
                         .id(UUID.randomUUID())
+                        .title("Server")
                         .description("Some problem with the server")
-                        .category("Hardware")
+                        .category(Category.HARDWARE)
                         .priority(3)
                         .progress(0)
                         .status(Status.OPEN)
@@ -232,8 +243,9 @@ class IssueServiceTest {
         var issueList = List.of(
                 Issue.builder()
                         .id(UUID.randomUUID())
+                        .title("Srver")
                         .description("Some problem with the server")
-                        .category("Hardware")
+                        .category(Category.HARDWARE)
                         .priority(3)
                         .progress(0)
                         .status(Status.OPEN)
@@ -243,8 +255,9 @@ class IssueServiceTest {
                         .build(),
                 Issue.builder()
                         .id(UUID.randomUUID())
+                        .title("PC problem")
                         .description("Some problem with the PC")
-                        .category("Hardware")
+                        .category(Category.HARDWARE)
                         .priority(3)
                         .progress(0)
                         .status(Status.OPEN)
@@ -270,8 +283,9 @@ class IssueServiceTest {
         var issueList = List.of(
                 Issue.builder()
                         .id(UUID.randomUUID())
-                        .description("Some problem with the server")
-                        .category("Hardware")
+                        .title("Server Problem")
+                        .description("Server Problem")
+                        .category(Category.HARDWARE)
                         .priority(3)
                         .progress(0)
                         .status(Status.OPEN)
@@ -281,8 +295,9 @@ class IssueServiceTest {
                         .build(),
                 Issue.builder()
                         .id(UUID.randomUUID())
+                        .title("Pc Problem")
                         .description("Some problem with the PC")
-                        .category("Hardware")
+                        .category(Category.HARDWARE)
                         .priority(3)
                         .progress(0)
                         .status(Status.OPEN)
@@ -292,8 +307,9 @@ class IssueServiceTest {
                         .build(),
                 Issue.builder()
                         .id(UUID.randomUUID())
+                        .title("Pay")
                         .description("Need pay recap")
-                        .category("Administration")
+                        .category(Category.OTHER)
                         .priority(3)
                         .progress(0)
                         .status(Status.OPEN)
@@ -303,8 +319,9 @@ class IssueServiceTest {
                         .build(),
                 Issue.builder()
                         .id(UUID.randomUUID())
+                        .title("Pc Problem")
                         .description("Some problem with the PC")
-                        .category("Hardware")
+                        .category(Category.HARDWARE)
                         .priority(3)
                         .progress(0)
                         .status(Status.IN_PROGRESS)
@@ -334,8 +351,9 @@ class IssueServiceTest {
         var issueList = List.of(
                 Issue.builder()
                         .id(UUID.randomUUID())
+                        .title("Server")
                         .description("Some problem with the server")
-                        .category("Hardware")
+                        .category(Category.HARDWARE)
                         .priority(3)
                         .progress(0)
                         .status(Status.OPEN)
@@ -345,8 +363,9 @@ class IssueServiceTest {
                         .build(),
                 Issue.builder()
                         .id(UUID.randomUUID())
+                        .title("Some problem with the PC")
                         .description("Some problem with the PC")
-                        .category("Hardware")
+                        .category(Category.HARDWARE)
                         .priority(3)
                         .progress(0)
                         .status(Status.OPEN)
@@ -372,8 +391,9 @@ class IssueServiceTest {
         final UUID issueId = UUID.randomUUID();
         final Issue issue = Issue.builder()
                 .id(issueId)
+                .title("Some problem with the server")
                 .description("Some problem with the server")
-                .category("Hardware")
+                .category(Category.HARDWARE)
                 .priority(3)
                 .progress(0)
                 .status(Status.IN_PROGRESS)

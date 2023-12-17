@@ -19,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/issues")
+@CrossOrigin(origins = "http://localhost:4200")
 public class IssueController {
     private final IssueService issueService;
 
@@ -30,6 +31,7 @@ public class IssueController {
     public ResponseEntity<IssueResponseDto> createIssue(@RequestBody IssueRequestDto issueRequestDto) {
         var errors = IssueRequestDtoValidator
                 .isDescriptionValid()
+                .and(IssueRequestDtoValidator.isTitleValid())
                 .and(IssueRequestDtoValidator.isPriorityValid())
                 .apply(issueRequestDto);
         var headers = new HttpHeaders();
@@ -54,6 +56,7 @@ public class IssueController {
     public ResponseEntity<IssueResponseDto> updateIssue(@PathVariable UUID issueId, @RequestBody IssueRequestDto issueRequestDto) {
         var errors = IssueRequestDtoValidator
                 .isDescriptionValid()
+                .and(IssueRequestDtoValidator.isTitleValid())
                 .and(IssueRequestDtoValidator.isPriorityValid())
                 .apply(issueRequestDto);
         var headers = new HttpHeaders();

@@ -14,6 +14,12 @@ public interface IssueRequestDtoValidator
                         ? EnumSet.noneOf(ValidationResult.class)
                         : EnumSet.of(ValidationResult.DESCRIPTION_NOT_VALID);
     }
+    static IssueRequestDtoValidator isTitleValid() {
+        return issueRequestDto ->
+                (issueRequestDto.title() != null && !issueRequestDto.title().isBlank())
+                        ? EnumSet.noneOf(ValidationResult.class)
+                        : EnumSet.of(ValidationResult.TITLE_NOT_VALID);
+    }
 
     static IssueRequestDtoValidator isPriorityValid() {
         return issueRequestDto ->
@@ -33,6 +39,7 @@ public interface IssueRequestDtoValidator
     }
 
     enum ValidationResult {
+        TITLE_NOT_VALID,
         DESCRIPTION_NOT_VALID,
         PRIORITY_NOT_VALID
     }
